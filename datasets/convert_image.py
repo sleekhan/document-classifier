@@ -46,7 +46,7 @@ def _get_filenames_and_classes(dataset_dir):
       A list of image file paths, relative to `dataset_dir` and the list of
       subdirectories, representing class names.
     """
-    doc_root = os.path.join(dataset_dir, "docs_images")
+    doc_root = os.path.join(dataset_dir, "doc_images")
     directories = []
     class_names = []
     for filename in os.listdir(doc_root):
@@ -117,11 +117,10 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_name, da
     sys.stdout.flush()
 
 
-def _dataset_exists(dataset_dir, num_shards):
+def _dataset_exists(dataset_name, dataset_dir, num_shards):
     for split_name in ['train', 'validation']:
         for shard_id in range(num_shards):
-            output_filename = _get_dataset_filename(
-                dataset_dir, split_name, shard_id)
+            output_filename = _get_dataset_filename(dataset_name, dataset_dir, split_name, shard_id, num_shards)
             if not tf.gfile.Exists(output_filename):
                 return False
     return True
@@ -135,7 +134,7 @@ def run(dataset_name, dataset_dir, num_shards, ratio_val):
         print('The dataset directory does not exist. Please specify the data directory again.')
         return
 
-    if _dataset_exists(dataset_dir, num_shards):
+    if _dataset_exists(dataset_name, dataset_dir, num_shards):
         print('Dataset files already exist. Exiting without re-creating them.')
         return
 

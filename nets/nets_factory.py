@@ -21,23 +21,11 @@ import functools
 
 import tensorflow as tf
 
-from nets import alexnet
-from nets import cifarnet
 from nets import inception
-from nets import lenet
-from nets import mobilenet_v1
-from nets import overfeat
-from nets import resnet_v1
-from nets import resnet_v2
-from nets import vgg
-from nets.nasnet import nasnet
 
 slim = tf.contrib.slim
 
 networks_map = {'inception_v4': inception.inception_v4}
-
-
-
 arg_scopes_map = {'inception_v4': inception.inception_v4_arg_scope}
 
 def get_network_fn(name, num_classes, weight_decay=0.0, is_training=False):
